@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/marconunesrj/memo-game#readme",
   "dependencies": {
+    "babel-loader": "^10.0.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "webpack": "^5.105.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3"
   }
 }
