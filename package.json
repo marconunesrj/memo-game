@@ -1,0 +1,20 @@
+{
+  "name": "memo-game",
+  "version": "1.0.0",
+  "description": "Jogo da Memória em React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marconunesrj/memo-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marconunesrj/memo-game/issues"
+  },
+  "homepage": "https://github.com/marconunesrj/memo-game#readme"
+}
