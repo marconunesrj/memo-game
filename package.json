@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/marconunesrj/memo-game/issues"
   },
-  "homepage": "https://github.com/marconunesrj/memo-game#readme"
+  "homepage": "https://github.com/marconunesrj/memo-game#readme",
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
 }
