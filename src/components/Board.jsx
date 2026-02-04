@@ -11,7 +11,7 @@ function getCards() {
            .map((icon, index) => ({
                 index,
                 icon,
-                showing: false,
+                showing: false,  // Controle de estado para saber se o cartão está virado ou não
                 selected: false,
                 matched: false,
            }))
@@ -19,10 +19,18 @@ function getCards() {
 
 export function Board() {    
     const [ cards, setCards ] = useState(getCards())
+
+    function onClick(card) {
+        const cardIndex = cards.findIndex(c => c.index === card.index)
+        cards[cardIndex].showing = !cards[cardIndex].showing
+        setCards([...cards])  // Cria um novo array para forçar a atualização do estado
+    }
+  
+
     return (
         <div style={style}>
             {cards.map((card, index) => (
-                <Card key={index} card={card} />
+                <Card key={index} card={card} onClick={onClick} />
             ))}
         </div>
     )
