@@ -5,6 +5,7 @@ import React, {useState} from 'react'
 // export function Card({children, icon}) {
 export function Card({children}) {
 
+  // Controle de estado para saber se o cartão está virado ou não
   const [ showing, show ] = useState(false)
 
   function onClick() {
