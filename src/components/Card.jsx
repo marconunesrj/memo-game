@@ -2,9 +2,13 @@ import React from 'react'
 
 // children prop pega o conteúdo que está entre as tags do componente
 // icon prop é um exemplo de prop personalizada
-export function Card({children, icon}) {
+// export function Card({children, icon}) {
+export function Card({children}) {
+
+  const showing = false
+
   return <button style={style} >
-    {children}
+    {showing ? children : '❔'}
     {/* {icon} */}
   </button>
 }
