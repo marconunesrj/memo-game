@@ -5,9 +5,14 @@ import React from 'react'
 // export function Card({children, icon}) {
 export function Card({children}) {
 
-  const showing = false
+  let showing = false
 
-  return <button style={style} >
+  function onClick() {
+    showing = !showing
+    console.log('clicou', showing)
+  }
+  
+  return <button style={style} onClick={onClick}>
     {showing ? children : '❔'}
     {/* {icon} */}
   </button>
