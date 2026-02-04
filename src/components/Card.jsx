@@ -1,15 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 // children prop pega o conteúdo que está entre as tags do componente
 // icon prop é um exemplo de prop personalizada
 // export function Card({children, icon}) {
 export function Card({children}) {
 
-  let showing = false
+  const [ showing, show ] = useState(false)
 
   function onClick() {
-    showing = !showing
-    console.log('clicou', showing)
+    show(!showing)
   }
   
   return <button style={style} onClick={onClick}>
