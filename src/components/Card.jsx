@@ -14,6 +14,8 @@ export function Card({card, onClick}) {
       onClick={() => onClick(card)}>
         {card.showing ? card.icon : '❔'}
         {/* {icon} */}
+        {/* /* Deve ser retirado o span abaixo se for usar a prop children */}
+        <span style={{fontSize: '.3em'}}>{card.icon}</span>
     </button>
   )
 }
