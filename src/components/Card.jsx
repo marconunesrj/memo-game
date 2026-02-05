@@ -5,10 +5,17 @@ import React, {useState} from 'react'
 // export function Card({children, icon}) {
 export function Card({card, onClick}) {
 
-  return <button style={style} onClick={() => onClick(card)}>
-    {card.showing ? card.icon : '❔'}
-    {/* {icon} */}
-  </button>
+  return (
+    <button 
+      style={{
+        ...style, 
+        backgroundColor: card.matched ? '#8fbc8f' : style.backgroundColor
+      }} 
+      onClick={() => onClick(card)}>
+        {card.showing ? card.icon : '❔'}
+        {/* {icon} */}
+    </button>
+  )
 }
 
 const style = {
