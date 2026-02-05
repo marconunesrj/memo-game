@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { use, useState, useEffect} from 'react'
 import { Card } from './Card'
 
 const icons = ['😂', '💕', '😁', '🍕',
@@ -19,13 +19,46 @@ function getCards() {
 
 export function Board() {    
     const [ cards, setCards ] = useState(getCards())
+    const [ verifying, setVerifying ] = useState(false)
 
     function onClick(card) {
+        if (card.selected || card.matched || verifying) {
+            return
+        }
+
         const cardIndex = cards.findIndex(c => c.index === card.index)
         cards[cardIndex].showing = !cards[cardIndex].showing
+
+        cards[cardIndex].selected = true
+
+        const selectedCards = cards.filter(c => c.selected)
+        if (selectedCards.length === 2) {
+            setVerifying(true)
+        }
+
         setCards([...cards])  // Cria um novo array para forçar a atualização do estado
     }
   
+    // Efeito para verificar se as cartas selecionadas são iguais
+    useEffect(() => {
+        if (!verifying) return
+
+        setTimeout(() => {
+            const selectedCards = cards.filter(c => c.selected)
+            selectedCards[0].selected = false
+            selectedCards[1].selected = false
+            if (selectedCards[0].icon === selectedCards[1].icon) {
+                selectedCards[0].matched = true
+                selectedCards[1].matched = true
+            } else {
+                selectedCards[0].showing = false
+                selectedCards[1].showing = false
+            }
+            setCards([...cards])  // Cria um novo array para forçar a atualização do estado
+            setVerifying(false)
+        }, 1000);  // 1 segundo
+    }, [verifying])
+
 
     return (
         <div style={style}>
