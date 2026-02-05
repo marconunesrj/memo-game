@@ -29,6 +29,7 @@ export function Board() {
 
     return (
         <div style={style}>
+            <button style={styleResetButton} onClick={() => setCards(getCards())}>Reiniciar Jogo</button>
             {cards.map((card, index) => (
                 <Card key={index} card={card} onClick={onClick} />
             ))}
@@ -44,4 +45,16 @@ const style = {
     gridTemplateRows: 'repeat(4, 1fr)',
     gap: '1em',
     padding: '1em',
+}
+
+const styleResetButton = {
+    position: 'absolute',
+    top: '1em',
+    right: '2em',
+    // display: 'flex',
+    fontSize: '1.2em',
+    padding: '1em',
+    borderRadius: '8px',
+    // marginBottom: '1em',
+    cursor: 'pointer',
 }
