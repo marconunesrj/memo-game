@@ -1,16 +1,19 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
+import { ThemeContext } from '../context/ThemeContext'
 
 // children prop pega o conteúdo que está entre as tags do componente
 // icon prop é um exemplo de prop personalizada
 // export function Card({children, icon}) {
-export function Card({card, onClick, themeDark}) {
+export function Card({card, onClick}) {
 
+  const { themeDark , nome} = useContext(ThemeContext)
+  
   return (
     <button style={style(themeDark, card.matched)} onClick={() => onClick(card)}>
         {card.showing ? card.icon : '❔'}
         {/* {icon} */}
         {/* /* Deve ser retirado o span abaixo se for usar a prop children */}
-        <span style={{fontSize: '.3em'}}>{card.icon}</span>
+        {/* <span style={{fontSize: '.3em'}}>{card.icon} {nome}</span> */}
     </button>
   )
 }

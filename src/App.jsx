@@ -1,20 +1,28 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { Board } from './components/Board'
+import { ThemeContext, ThemeProvider } from './context/ThemeContext'
 
 export function App() {
-    
-    const [ themeDark, setThemeDark ] = useState(false)
+    return (
+        <ThemeProvider>
+            <Content />
+        </ThemeProvider>    
+    )
+}
 
+function Content() {
+    
+    const { themeDark, setThemeDark } = useContext(ThemeContext)
 
     return (
         <div style={style(themeDark)}>
             <div style={{display: 'flex', alignItems: 'center', gap: '2em'}}>
                 <h1>Meu Jogo da Memória</h1>
-                <a style = {styleThemeButton(themeDark)} a href='#' onClick={() => setThemeDark(!themeDark)}>
+                <a style = {styleThemeButton(themeDark)} href='#' onClick={() => setThemeDark(!themeDark)}>
                     {themeDark ? "🌑" : "☀️"}
                 </a>
             </div>
-            <Board themeDark={themeDark}/>
+            <Board />
         </div>
     )
 }

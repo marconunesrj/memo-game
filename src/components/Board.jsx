@@ -1,10 +1,13 @@
-import React, { use, useRef, useState, useEffect, useCallback, useMemo } from "react";
+import React, { use, useRef, useState, useEffect, useCallback, useMemo, useContext } from "react";
 import { Card } from "./Card";
+import { ThemeContext } from "../context/ThemeContext";
 
 // const icons = ["😂", "💕", "😁", "🍕", "🐳", "🤢", "😻", "🐙"];
 
 
-export function Board({themeDark}) {
+export function Board() {
+
+    const { themeDark} = useContext(ThemeContext)
 
     // O estado restarted é usado para forçar a atualização do componente quando o jogo é reiniciado,
     // o que por sua vez vai gerar novos ícones e cartas
