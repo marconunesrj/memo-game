@@ -1,26 +1,27 @@
-import React, { use, useRef, useState, useEffect } from "react";
+import React, { use, useRef, useState, useEffect, useCallback } from "react";
 import { Card } from "./Card";
 
 const icons = ["😂", "💕", "😁", "🍕", "🐳", "🤢", "😻", "🐙"];
 
-function getCards() {
-    return [...icons, ...icons]
-        .sort(() => Math.random() - 0.5) // Embaralha as cartas
-        .map((icon, index) => ({
-            index,
-            icon,
-            showing: false, // Controle de estado para saber se o cartão está virado ou não
-            selected: false,
-            matched: false,
-        }));
-}
-
 export function Board() {
+    const getCards = useCallback(() => {
+        return [...icons, ...icons]
+            .sort(() => Math.random() - 0.5) // Embaralha as cartas
+            .map((icon, index) => ({
+                index,
+                icon,
+                showing: false, // Controle de estado para saber se o cartão está virado ou não
+                selected: false,
+                matched: false,
+            }))
+    })
+    
     const [cards, setCards] = useState(getCards());
     const [verifying, setVerifying] = useState(false);
     const restartButton = useRef(null);
 
-    function onClick(card) {
+
+    const onClick = useCallback((card) => {
         if (card.selected || card.matched || verifying) {
             return;
         }
@@ -36,7 +37,7 @@ export function Board() {
         }
 
         setCards([...cards]); // Cria um novo array para forçar a atualização do estado
-    }
+    })
 
     // Efeito para verificar se as cartas selecionadas são iguais
     useEffect(() => {
