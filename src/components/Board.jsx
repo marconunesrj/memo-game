@@ -1,9 +1,33 @@
-import React, { use, useRef, useState, useEffect, useCallback } from "react";
+import React, { use, useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { Card } from "./Card";
 
-const icons = ["😂", "💕", "😁", "🍕", "🐳", "🤢", "😻", "🐙"];
+// const icons = ["😂", "💕", "😁", "🍕", "🐳", "🤢", "😻", "🐙"];
 
-export function Board() {
+
+export function Board({themeDark}) {
+
+    // O estado restarted é usado para forçar a atualização do componente quando o jogo é reiniciado,
+    // o que por sua vez vai gerar novos ícones e cartas
+    const [restarted, restart] = useState(0);
+
+    // Vai pegar 8 ícones aleatórios do array, duplicar eles e embaralhar o resultado
+    const icons = useMemo(() => [
+        "😂", "💕", "😁", "🍕", "🐳", "🤢", "😻", "🐙",
+        "🦄", "🐝", "🦋", "🐢", "🦜", "🦥", "🦩", "🦦",
+        "🌵", "🌴", "🌸", "🌼", "🍁", "🍄", "🌙", "☄️",
+        "🧊", "🧿", "🪄", "🎈", "🎀", "🎁", "🎲", "🪁",
+        "🧸", "🪅", "🎻", "🥁", "🎺", "🎷", "🪕", "🎹",
+        "🛹", "🛼", "⛸️", "🥌", "🏹", "🥏", "🪂", "🤿",
+        "🚲", "🛵", "🚁", "🛸", "⛵", "🚤", "🗺️", "🧭",
+        "🏕️", "🗽", "🗼", "🎡", "🎢", "🏖️", "🏜️", "🌋",
+        "🧪", "🧫", "🧬", "🔬", "🛰️", "💾", "🖨️", "⌨️",
+        "🧯", "🔒", "🗝️", "📎", "🗂️", "🧾", "📮", "🪙",
+        "🕯️", "🪔", "🛎️", "🧹", "🪣", "🧼", "🧽", "🚿",
+        "🪞", "🛁", "🛋️", "🪑", "🚪", "🪟", "🧱", "🏺",
+        "🍉", "🧁", "🍿", "🧃"
+    ].sort(() => Math.random() - 0.5).slice(0, 8), [restarted]);
+
+    // A função getCards é usada para gerar as cartas do jogo, duplicando os ícones e embaralhando o resultado
     const getCards = useCallback(() => {
         return [...icons, ...icons]
             .sort(() => Math.random() - 0.5) // Embaralha as cartas
@@ -20,7 +44,8 @@ export function Board() {
     const [verifying, setVerifying] = useState(false);
     const restartButton = useRef(null);
 
-
+    // A função onClick é usada para lidar com o clique em uma carta, 
+    // virando a carta e verificando se duas cartas foram selecionadas
     const onClick = useCallback((card) => {
         if (card.selected || card.matched || verifying) {
             return;
@@ -62,6 +87,8 @@ export function Board() {
         }
     }, [verifying]);
 
+    // A função winCheck é usada para verificar se todas as cartas foram combinadas, 
+    // o que significa que o jogador venceu o jogo
     function winCheck() {
         if (!cards.find((card) => !card.matched)) {
             setTimeout(
@@ -75,36 +102,41 @@ export function Board() {
         }
     }
 
+    // Efeito para gerar as cartas quando o componente é montado ou quando o estado restarted é atualizado
+    useEffect(() => {
+        setCards(getCards())
+    }, [restarted]);
+
+    // Quando o botão de reiniciar for clicado, ele vai gerar um novo número aleatório 
+    // para forçar a atualização do estado restarted, o que por sua vez vai gerar novos ícones e cartas
     return (
-        <div style={style}>
-            <button ref={restartButton} style={styleResetButton} onClick={() => setCards(getCards())}>
+        <div style={style(themeDark)}>
+            <button ref={restartButton} style={styleResetButton(themeDark)} onClick={() => restart(Math.random())}>
                 Reiniciar Jogo
             </button>
             {cards.map((card, index) => (
-                <Card key={index} card={card} onClick={onClick} />
+                <Card key={index} card={card} onClick={onClick} themeDark={themeDark}/>
             ))}
         </div>
     );
 }
 
-const style = {
-    backgroundColor: "#2f2f2f",
+const style = themeDark => ({
+    backgroundColor: themeDark ? "#2f2f2f" : "#ffffff",
     flexGrow: 1,
     display: "grid",
     gridTemplateColumns: "repeat(4, 1fr)",
     gridTemplateRows: "repeat(4, 1fr)",
     gap: "1em",
     padding: "1em",
-};
+});
 
-const styleResetButton = {
+const styleResetButton = themeDark => ({
     position: "absolute",
-    top: "1em",
-    right: "2em",
-    // display: 'flex',
-    fontSize: "1.2em",
+    right: ".8em",
+    top: ".5em",
     padding: "1em",
     borderRadius: "8px",
-    // marginBottom: '1em',
     cursor: "pointer",
-};
+    fontSize: "1.2em",
+});
